@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.7-slim-buster
+FROM python:3.7-alpine
 
 # Set the working directory to /app
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
 COPY /app .
@@ -20,4 +20,4 @@ ENV FLASK_APP=main.py
 EXPOSE 5000
 
 # Run the command to start the Flask app
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask","run", "--host=0.0.0.0"]

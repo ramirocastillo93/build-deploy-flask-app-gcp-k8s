@@ -34,16 +34,16 @@ class PostgreSQL:
                 if user_exists:
                     cur.execute("UPDATE users SET dateOfBirth=%s WHERE username=%s", (dateOfBirth, username.lower()))
                     self.conn.commit()
-                    return {"status": 204, "message": f"User {username.lower()} updated successfully."}
+                    return {"status": 204, "message": f"User {username.lower()} updated successfully."}, 204
                 else:
                     cur.execute("INSERT INTO users (username, dateOfBirth) VALUES (%s, %s)", (username.lower(), dateOfBirth))
                     self.conn.commit()
-                    return {"status": 204, "message": f"User '{username.lower()}' created successfully."}
+                    return {"status": 204, "message": f"User '{username.lower()}' created successfully."}, 204
         
         except Error as e:
             print(f"Error creating user: {e}")
             self.conn.rollback()
-            return {"status": 400, "message": str(e)}
+            return {"status": 400, "message": str(e)}, 400
 
     def isBirthday(self, username):
         date_format = '%Y-%m-%d'
@@ -52,18 +52,22 @@ class PostgreSQL:
             with self.conn.cursor() as cur:
                 cur.execute("SELECT dateOfBirth FROM users WHERE username=%s", (username.lower(),))
                 birthday = cur.fetchone()
-                birthday = datetime.strptime(birthday[0], date_format) 
-                birthday = birthday.replace(year=today.year)
-                delta = abs(birthday - today)
-                if today > birthday:
-                    return 365 - delta.days
-                if today == birthday:
-                    return 0
+                if birthday == None:
+                    return None
                 else:
-                    return delta.days
+                    birthday = datetime.strptime(str(birthday[0]), date_format) 
+                    birthday = birthday.replace(year=today.year)
+                    delta = abs(birthday - today)
+                    if today > birthday:
+                        return 365 - delta.days
+                    if today == birthday:
+                        return 0
+                    else:
+                        return delta.days
         except Error as e:
             print(f"Error fetching birthday: {e}")
-    
+        # except NoneType as e:
+        #     print(f"Error, no user: {e}")
     def disconnect(self):
         self.conn.close()
         print("Disconnected from database")

@@ -16,7 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{db_user}:{db_pass}@{db_h
 db = SQLAlchemy(app)
 
 db_conn = PostgreSQL(db_name, db_user, db_pass, db_host, db_port)
-db_conn.connect()
 
 def verifyDate(date=str):
     pattern = "(?:19\d{2}|20[01][0-9]|2023)[-/.](?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])\b"
@@ -34,11 +33,14 @@ def hello_world(username):
             if 'dateOfBirth' in json_data:
                 dob = json_data['dateOfBirth']
                 if verifyDate(dob):
+                    db_conn.connect()
                     try:
                         db_conn.createUpdateUser(username, dob)
-                        return "OK", 204
+                        return {}, 204
                     except:
-                        return 400
+                        return {}, 400
+                    finally:
+                        db_conn.disconnect()
                 else:
                     return jsonify({"message":"dateOfBirth format isn't YYYY-MM-DD", "status": 400}), 400
             else:
@@ -46,19 +48,27 @@ def hello_world(username):
         else:
             return jsonify({"message":f"Request not in json format {type(request)}", "status": 400}), 400
     else:
+        db_conn.connect()
         try:
             if db_conn.isBirthday(username) == 0:
                 return {
                     "message":f"Hello, {username.capitalize()}! Happy birthday!"
                 }, 200
-            else:
+            if db_conn.isBirthday(username) != 0 and db_conn.isBirthday(username) is not None:
                 return {
                     "message":f"Hello, {username.capitalize()}! Your birthday is in {db_conn.isBirthday(username)} day(s)!"
                 }, 200
+            elif db_conn.isBirthday(username) == None:
+                return {
+                    "message":f"Error: User {username.capitalize()} doesn't exist."
+                }, 400
         except IndexError as e:
             return {
                 "message":f"Error occurred {e}"
             }, 400
+        finally:
+            db_conn.disconnect()
+    
 
 if __name__ == "__main__":
     app.run(debug='False')
