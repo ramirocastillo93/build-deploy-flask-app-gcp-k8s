@@ -1,8 +1,8 @@
-CREATE DATABASE suppliers;
+CREATE DATABASE databesos;
 
-\c suppliers
+\c databesos
 
-CREATE TABLE users (
+CREATE TABLE usuarios (
   id SERIAL PRIMARY KEY,
   username VARCHAR(100) NOT NULL,
   dateOfBirth DATE NOT NULL

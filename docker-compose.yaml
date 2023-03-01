@@ -1,32 +1,36 @@
 version: '3'
 services:
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "5000:5000"
-  #   environment:
-  #     DB_USER: admin
-  #     DB_PASS: admin
-  #     DB_HOST: db
-  #     DB_NAME: suppliers
-  #   depends_on:
-  #     postgres:
-  #       condition: service_started
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres
-    ports:
-      - "5432:5432"
+    networks:
+      - backend
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: localhost
+      POSTGRES_DB: suppliers
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
     volumes:
       - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    # healthcheck:
-    #   test: ["CMD-SHELL", "pg_isready -U admin -d suppliers"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d suppliers -h localhost -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  backend:
+  

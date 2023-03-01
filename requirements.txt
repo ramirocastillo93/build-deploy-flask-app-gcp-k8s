@@ -1,4 +1,5 @@
 psycopg2-binary
 flask
 flask_sqlalchemy
-monoengine
+flask_cors
+python-dotenv

@@ -28,15 +28,15 @@ class PostgreSQL:
     def createUpdateUser(self, username, dateOfBirth):
         try:
             with self.conn.cursor() as cur:
-                cur.execute("SELECT 1 FROM users WHERE username=%s", (username.lower(),))
+                cur.execute(f"SELECT 1 FROM usuarios WHERE username='{username.lower()}'")
                 user_exists = cur.fetchone()
 
                 if user_exists:
-                    cur.execute("UPDATE users SET dateOfBirth=%s WHERE username=%s", (dateOfBirth, username.lower()))
+                    cur.execute(f"UPDATE usuarios SET dateOfBirth='{dateOfBirth}' WHERE username='{username.lower()}'")
                     self.conn.commit()
-                    return {"status": 204, "message": f"User {username.lower()} updated successfully."}, 204
+                    return {"status": 204, "message": f"User '{username.lower()}' updated successfully."}, 204
                 else:
-                    cur.execute("INSERT INTO users (username, dateOfBirth) VALUES (%s, %s)", (username.lower(), dateOfBirth))
+                    cur.execute(f"INSERT INTO usuarios (username, dateOfBirth) VALUES ('{username.lower()}', '{dateOfBirth}')")
                     self.conn.commit()
                     return {"status": 204, "message": f"User '{username.lower()}' created successfully."}, 204
         
@@ -50,7 +50,7 @@ class PostgreSQL:
         today = datetime.today()
         try:
             with self.conn.cursor() as cur:
-                cur.execute("SELECT dateOfBirth FROM users WHERE username=%s", (username.lower(),))
+                cur.execute(f"SELECT dateOfBirth FROM usuarios WHERE username='{username.lower()}'")
                 birthday = cur.fetchone()
                 if birthday == None:
                     return None

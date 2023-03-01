@@ -3,11 +3,11 @@ from utils.VerifyDate import VerifyDate
 from utils.DbConnection import PostgreSQL
 import os
 
-db_user = os.environ["DB_USER"]
-db_pass = os.environ["DB_PASS"]
-db_host = os.environ["DB_HOST"]
-db_name = os.environ["DB_NAME"]
-db_port = os.environ["DB_PORT"]
+db_user = os.environ["POSTGRES_USER"]
+db_pass = os.environ["POSTGRES_PASSWORD"]
+db_host = os.environ["POSTGRES_HOST"]
+db_name = os.environ["POSTGRES_DB"]
+db_port = os.environ["POSTGRES_PORT"]
 
 db_conn = PostgreSQL(
     dbname = db_name, 
