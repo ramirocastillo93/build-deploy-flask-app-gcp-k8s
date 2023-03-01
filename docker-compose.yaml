@@ -25,8 +25,8 @@ services:
       POSTGRES_DB: localhost
     volumes:
       - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d suppliers"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U admin -d suppliers"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
