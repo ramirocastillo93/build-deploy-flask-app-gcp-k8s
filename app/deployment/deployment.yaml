@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-api
+  namespace: default
+  labels:
+    app: flask-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-api
+  template:
+    metadata:
+      labels:
+        app: flask-api
+    spec:
+      imagePullSecrets:
+        - name: gcr-json-key
+      containers:
+      - name: flask-api
+        image: gcr.io/developing-stuff/flask-api:v0.0.2
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: "0.1"
+            memory: "64Mi"

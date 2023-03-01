@@ -1,0 +1,36 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # networks:
+    #   - backend
+    ports:
+      - "5000:5000"
+    # depends_on:
+    #   - postgres
+
+#   postgres:
+#     image: postgres
+#     networks:
+#       - backend
+#     environment:
+#       POSTGRES_USER: admin
+#       POSTGRES_PASSWORD: admin
+#       POSTGRES_DB: suppliers
+#       POSTGRES_HOST: postgres
+#       POSTGRES_PORT: 5432
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U admin -d suppliers -h localhost -p 5432"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+
+# networks:
+#   backend:
+  

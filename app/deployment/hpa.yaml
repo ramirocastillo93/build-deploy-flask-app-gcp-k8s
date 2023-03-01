@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: flask-api-hpa
+  namespace: default
+  labels:
+    app: flask-api
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: flask-api
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: AverageValue
+        averageValue: 40m
