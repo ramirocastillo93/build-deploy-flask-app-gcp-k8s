@@ -21,6 +21,17 @@ spec:
       - name: flask-api
         image: gcr.io/developing-stuff/flask-api:v0.0.2
         imagePullPolicy: Always
+        env:
+          - name: POSTGRES_USER
+            value: "admin" 
+          - name: POSTGRES_PASSWORD
+            value: "admin"
+          - name: POSTGRES_HOST
+            value: "10.30.244.110"
+          - name: POSTGRES_DB
+            value: "databesos"
+          - name: POSTGRES_PORT
+            value: "5432"
         resources:
           limits:
             cpu: "0.1"
