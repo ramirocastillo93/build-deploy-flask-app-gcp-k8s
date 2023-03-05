@@ -3,7 +3,7 @@ project_id = "developing-stuff"
 region = "europe-west1"
 
 gke_num_nodes = {
-  max = 2
+  max = 10
   min = 1
 }
 

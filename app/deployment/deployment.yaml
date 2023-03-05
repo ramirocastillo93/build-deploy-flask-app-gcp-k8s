@@ -20,7 +20,7 @@ spec:
       containers:
       - name: flask-api
         image: gcr.io/developing-stuff/flask-api:v0.0.2
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         resources:
           limits:
             cpu: "0.1"

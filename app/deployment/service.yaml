@@ -6,10 +6,13 @@ metadata:
   labels:
     app: flask-api
 spec:
-  ports:
-  - protocol: TCP
-    port: 25443
   selector:
     app: flask-api
   type: LoadBalancer
-  loadBalancerIP: ""
+  ports:
+  - name: tcp
+    protocol: TCP
+    port: 25443
+  - name: http 
+    port: 80 
+    targetPort: 5000
