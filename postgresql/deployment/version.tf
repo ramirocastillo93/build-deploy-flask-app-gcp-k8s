@@ -8,7 +8,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = "tf-flash-app-v1"
+    bucket = "tf-flask-app-v1"
     prefix = "postgresql_state"
   }
 }
