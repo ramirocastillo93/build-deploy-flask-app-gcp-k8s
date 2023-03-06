@@ -1,0 +1,5 @@
+env = "dev"
+k8s_secret_name = "gcr-json-key"
+k8s_secret_password = "key.json"
+k8s_secret_server = "gcr.io"
+k8s_secret_username = "_json_key"
