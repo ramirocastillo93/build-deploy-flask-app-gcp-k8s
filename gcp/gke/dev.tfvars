@@ -25,7 +25,7 @@ gke_disabled_hpa = true
 
 env_name = "dev"
 
-cluster_name = "flash-app-v1"
+cluster_name = "flask-app-v1"
 
 ip_range_pods_name = "ip-range-pods-name"
 
