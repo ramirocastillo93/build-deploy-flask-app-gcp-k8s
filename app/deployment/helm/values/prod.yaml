@@ -14,7 +14,7 @@ image:
 database:
   user: admin
   password: admin
-  host: 10.30.244.110
+  host: bitnami-postgresql.default.svc.cluster.local
   port: "5432"
   dbname: databesos
 
