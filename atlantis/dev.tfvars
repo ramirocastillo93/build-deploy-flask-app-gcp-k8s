@@ -1,0 +1,5 @@
+namespace_name = "atlantis"
+env            = "dev"
+cluster_name   = "flask-app-v1-dev"
+project_id     = "developing-stuff"
+region         = "europe-west1"

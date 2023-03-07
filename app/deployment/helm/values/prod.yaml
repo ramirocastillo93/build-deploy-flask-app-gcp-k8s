@@ -1,0 +1,42 @@
+app:
+  name: flask-api
+  namespace: default
+  replicas: 3
+  resources:
+    cpu: "0.1"
+    memory: "64Mi"
+
+image:
+  repository: gcr.io/developing-stuff/flask-api
+  tag: v0.0.2
+  pullPolicy: Always
+
+database:
+  user: admin
+  password: admin
+  host: bitnami-postgresql.default.svc.cluster.local
+  port: "5432"
+  dbname: databesos
+
+imagePullSecrets:
+  name: gcr-json-key
+
+service:
+  name: flask-api-service
+  namespace: default
+  type: LoadBalancer
+  tcpPort: 25443
+  httpPort: 80
+  targetPort: 5000
+
+hpa:
+  name: flask-api-hpa
+  namespace: default
+  targetKind: Deployment
+  targetName: flask-api
+  targetAPIVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 5
+  metricName: cpu
+  metricType: AverageValue
+  metricAverageValue: 40m

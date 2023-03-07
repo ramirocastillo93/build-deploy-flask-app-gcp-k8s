@@ -1,0 +1,5 @@
+apiVersion: v2
+name: flask-api-chart
+description: A Helm chart for deploying Flash application to GKE
+version: 1.0.0
+appVersion: 0.0.1
