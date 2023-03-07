@@ -103,3 +103,8 @@ variable "ip_range_services_name" {
   default     = "ip_range_services_name"
   type        = string
 }
+
+variable "namespaces" {
+  type = map(object)
+  description = "List of namespaces"
+}
